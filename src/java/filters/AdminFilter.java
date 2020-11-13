@@ -16,7 +16,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.Role;
 import models.User;
+import services.AccountService;
 
 /**
  *
@@ -38,11 +40,10 @@ public class AdminFilter implements Filter {
             HttpSession session = httpRequest.getSession();
             
             String email = (String) session.getAttribute("email");
-            UserDB userDB = new UserDB();
+            AccountService as = new AccountService();
+            Role userRole = as.getRole(email);
             
-            User user = userDB.get(email);
-            
-            if(user.getRole().getRoleId() != 1){
+            if(userRole.getRoleId() != 1){
                 httpResponse.sendRedirect("notes");
                 return;
             }

@@ -1,6 +1,7 @@
 package services;
 
 import dataaccess.UserDB;
+import models.Role;
 import models.User;
 
 public class AccountService {
@@ -17,5 +18,13 @@ public class AccountService {
         }
         
         return null;
+    }
+    
+    public Role getRole(String email){
+        UserDB userDB = new UserDB();
+        
+        User user = userDB.get(email);
+        
+        return user.getRole();
     }
 }
